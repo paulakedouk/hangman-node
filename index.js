@@ -69,31 +69,42 @@ function game() {
 }
 
 function checkLetter(user) {
-  if (choicesLeft === 1) {
-    console.log('________________________________\n');
-    console.log('\n' + chalk.red('GAME OVER!') + '\n');
-    console.log('________________________________\n');
-  } else {
-    if (word.indexOf(user.guess) > -1) {
-      for (var i = 0; i < word.length; i++) {
-        if (user.guess === word.charAt(i)) {
-          console.log('\n' + chalk.green('Correct!'));
+  if (word.indexOf(user.guess) > -1) {
+    for (var i = 0; i < word.length; i++) {
+      if (user.guess === word.charAt(i)) {
+        console.log('\n' + chalk.green('Correct!'));
+        wordLine[i] = user.guess;
+        console.log('Word: ' + wordLine.join(' ') + '\n');
 
-          wordLine[i] = user.guess;
-          console.log('Word: ' + wordLine.join(' ') + '\n');
-          console.log('________________________________\n');
-          game();
-        }
+        console.log('________________________________\n');
+        finishGame(word);
+        game();
       }
+    }
+  } else {
+    if (choices.includes(user.guess)) {
+      console.log("\nYou've chosen that letter before");
+      console.log('________________________________\n');
     } else {
-      console.log('\n' + chalk.red('Wrong!'));
       choices.push(user.guess);
-
+      console.log('\n' + chalk.red('Wrong!'));
       console.log('Chosen letters: ' + choices);
       choicesLeft--;
       console.log('\nChoices left: ' + choicesLeft);
       console.log('________________________________\n');
-      game();
     }
+
+    finishGame(word);
+    game();
+  }
+}
+
+function finishGame(word) {
+  if (winCounter === word.length) {
+    console.log('\n' + chalk.green('YOU WON!') + '\n');
+    console.log('________________________________\n');
+  } else if (choicesLeft === 0) {
+    console.log('\n' + chalk.red('GAME OVER!') + '\n');
+    console.log('________________________________\n');
   }
 }
