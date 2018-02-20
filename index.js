@@ -41,6 +41,7 @@ function startGame() {
     wordLine.push('_');
   }
   round++;
+  console.log('________________________________\n');
   console.log('Round: ' + round);
   console.log('________________________________\n');
   console.log('Word: ' + wordLine.join(' '));
@@ -91,7 +92,9 @@ function checkLetter(user) {
           console.log('Word: ' + wordLine.join(' ') + '\n');
           winCounter++;
           console.log('________________________________\n');
-          guessLetter();
+          if (winCounter !== word.length) {
+            guessLetter();
+          }
           finishGame(word);
         }
       }
@@ -112,17 +115,17 @@ function checkLetter(user) {
 
 function finishGame(word) {
   if (winCounter === word.length) {
-    console.log('\n' + chalk.green('You got it! New word: ') + '\n');
+    console.log('\n' + chalk.green('You got it!') + '\n');
     win++;
     console.log('Win: ' + win + ', Lose: ' + lose);
     console.log('________________________________\n');
     newRound();
   } else if (choicesLeft === 0) {
     console.log('The word has: ' + word.toUpperCase());
-    console.log('\n' + chalk.red('Game over! New word: ') + '\n');
-    console.log('________________________________\n');
+    console.log('\n' + chalk.red('Game over!') + '\n');
     lose++;
     console.log('Win: ' + win + ', Lose: ' + lose);
+    console.log('________________________________\n');
     newRound();
   }
 }
@@ -131,14 +134,15 @@ function newRound() {
   inquirer
     .prompt([
       {
-        type: 'confirm',
-        message: 'Do you want to start a new game?',
+        type: 'list',
+        message: 'What do you want to do?',
         name: 'newGame',
-        default: true
+        choices: ['New word!', 'Finish the game!']
       }
     ])
     .then(function(response) {
-      if (response.newGame) {
+      if (response.newGame === 'New word!') {
+        choices = [];
         reset();
         startGame();
       } else {
@@ -150,11 +154,7 @@ function newRound() {
 function reset() {
   winCounter = 0;
   choicesLeft = 10;
-  choices = [];
   userGuesses = [];
   wordLine = [];
-  word = new Word(randomWords({ exactly: 1 })[0]);
-  round = 0;
-  win = 0;
-  lose = 0;
+  word = randomWords({ exactly: 1 })[0];
 }
