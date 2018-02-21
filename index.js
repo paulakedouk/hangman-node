@@ -16,23 +16,23 @@ var lose = 0;
 
 // Console a draw to start the game
 console.log(`
-000000000000000000000000000
-00000_BY_PAULA_KEDOUK_00000
-000   000     000      
-000  000    0000000    
-000 000    (0000000)   
-00000       0000000    
-0000          000      
-000         0000000    
-000        00 000 00   
-000       00  000  00  
-000      00   000   00 
-000           000      
-000         0000000    
-000       000     000  
-000      000       000 
-000      000       000 
-000000                 
+:::::::::::::::::::::::::::
+::::::BY:PAULA:KEDOUK::::::
+:::   :::     :::      
+:::  :::    :::::::    
+::: :::    (:::::::)   
+:::::        :::::    
+::::          :::      
+:::         :::::::    
+:::        :: ::: ::   
+:::       ::  :::  ::  
+:::      ::   :::   :: 
+:::           :::      
+:::         :::::::    
+:::       :::     :::  
+:::      :::       ::: 
+:::      :::       ::: 
+::::::                 
 `);
 
 function startGame() {
@@ -107,7 +107,7 @@ function checkLetter(user) {
     } else {
       wrongLetters.push(user.guess);
       console.log('\n' + chalk.red('Incorrect!'));
-      console.log('Chosen letters: ' + wrongLetters);
+      console.log('Wrong guesses: ' + wrongLetters);
       choicesLeft--;
       console.log('\nChoices left: ' + choicesLeft);
       console.log('________________________________\n');
@@ -121,17 +121,64 @@ function checkLetter(user) {
 
 function finishGame(word) {
   if (letterCounter === word.length) {
-    console.log('\n' + chalk.green('You got it!') + '\n');
+    // console.log('\n' + chalk.green('You got it!') + '\n');
+    console.log(`
+            OOOOOOOOOOOOO
+         OOOOOOOOOOOOOOOOOOO
+      OOOOOO  OOOOOOOOO  OOOOOO
+    OOOOOO      OOOOO      OOOOOO
+  OOOOOOOO  #   OOOOO  #   OOOOOOOO
+ OOOOOOOOOO    OOOOOOO    OOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OOOO  OOOOOOOOOOOOOOOOOOOOOOOOO  OOOO
+ OOOO  OOOOOOOOOOOOOOOOOOOOOOO  OOOO
+  OOOO   OOOOOOOOOOOOOOOOOOOO  OOOO
+    OOOOO   OOOOOOOOOOOOOOO   OOOO
+      OOOOOO   OOOOOOOOO   OOOOOO
+         OOOOOO         OOOOOO
+             OOOOOOOOOOOO
+               OOOOOOOO
+
+               YOU WIN!
+    `)
     win++;
-    console.log('Win: ' + win + ', Lose: ' + lose);
+    console.log('Placar: \nWin: ' + win + ', Lose: ' + lose);
     console.log('________________________________\n');
     newRound();
   } else if (choicesLeft === 0) {
-    console.log('The word has: ' + word.toUpperCase());
-    console.log('\n' + chalk.red('Game over!') + '\n');
+    console.log('The word was: ' + word.toUpperCase());
+    // console.log('\n' + chalk.red('Game over!') + '\n');
     lose++;
-    console.log('Win: ' + win + ', Lose: ' + lose);
+    console.log('Placar: \nWin: ' + win + ', Lose: ' + lose);
     console.log('________________________________\n');
+    console.log(`
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼
+██┼┼┼▄▄▄┼██▄▄▄▄▄██┼██┼┼┼▀┼┼┼██┼██▀▀▀
+██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██┼┼┼
+███▄▄▄██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██▄▄▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+███▀▀▀███┼▀███┼┼██▀┼██▀▀▀┼██▀▀▀▀██▄┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██┼┼┼┼██┼┼┼┼┼██┼
+██┼┼┼┼┼██┼┼┼██┼┼██┼┼██▀▀▀┼██▄▄▄▄▄▀▀┼
+██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼
+███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼
+┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+    `)
     newRound();
   }
 }
@@ -143,7 +190,7 @@ function newRound() {
         type: 'list',
         message: 'What do you want to do?',
         name: 'newGame',
-        choices: ['New word!', 'Finish the game!']
+        choices: ['New word!', 'Quit game!']
       }
     ])
     .then(function(response) {
