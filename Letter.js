@@ -1,9 +1,11 @@
-function Letter(letter) {
-  if (letter !== ' ') {
-    letter = '_';
-  } else {
-    letter = ' ';
+class GameLetter {
+  // create a letter object for each char in current word
+  constructor(letter) {
+    this.character = letter !== ' ' ? '_' : ' ';
+    this.letter = letter;
+    this.currentVal = this.character;
+    this.isLetter = false;
   }
 }
 
-module.exports = Letter;
+module.exports = GameLetter;

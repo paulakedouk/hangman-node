@@ -4,9 +4,9 @@ var randomWords = require('random-words');
 
 // Create a function that start the game and show the statistics
 
-var winCounter = 0;
+var letterCounter = 0;
 var choicesLeft = 10;
-var choices = [];
+var wrongLetters = [];
 var userGuesses = [];
 var wordLine = [];
 var word = randomWords({ exactly: 1 })[0];
@@ -74,34 +74,40 @@ function guessLetter() {
 function checkLetter(user) {
   // Check if the user has already chosen that letter before
 
-  if (choices.includes(user.guess) || userGuesses.includes(user.guess)) {
+  if (wrongLetters.includes(user.guess) || userGuesses.includes(user.guess)) {
     console.log("\nYou've chosen that letter before");
     console.log('________________________________\n');
     guessLetter();
   } else {
     // If the user guess is greater than -1 it means that the letter exists in that word
-    if (word.indexOf(user.guess) > -1) {
-      for (var i = 0; i < word.length; i++) {
-        // Go through the word array, find the letter and then replace the '_' with that letter
-        if (user.guess === word.charAt(i)) {
-          userGuesses.push(user.guess);
-          // Change color to green
-          console.log('\n' + chalk.green('Correct!'));
-          wordLine[i] = user.guess;
-          // Shows the word with the new letter
-          console.log('Word: ' + wordLine.join(' ') + '\n');
-          winCounter++;
-          console.log('________________________________\n');
-          if (winCounter !== word.length) {
-            guessLetter();
+
+    if (word.indexOf(user.guess) !== -1) {
+      if (!userGuesses.includes(user.guess)) {
+        userGuesses.push(user.guess);
+
+        console.log('\n' + chalk.green('Correct!'));
+
+        for (var i = 0; i < word.length; i++) {
+          if (user.guess === word.charAt(i)) {
+            wordLine[i] = user.guess;
+            letterCounter++;
           }
-          finishGame(word);
+        }
+
+        // Shows the word with the new letter
+        console.log('Word: ' + wordLine.join(' ') + '\n');
+        console.log('________________________________\n');
+
+        if (letterCounter !== word.length) {
+          console.log('letterCounter: ' + letterCounter);
+          guessLetter();
         }
       }
+      finishGame(word);
     } else {
-      choices.push(user.guess);
+      wrongLetters.push(user.guess);
       console.log('\n' + chalk.red('Incorrect!'));
-      console.log('Chosen letters: ' + choices);
+      console.log('Chosen letters: ' + wrongLetters);
       choicesLeft--;
       console.log('\nChoices left: ' + choicesLeft);
       console.log('________________________________\n');
@@ -114,7 +120,7 @@ function checkLetter(user) {
 }
 
 function finishGame(word) {
-  if (winCounter === word.length) {
+  if (letterCounter === word.length) {
     console.log('\n' + chalk.green('You got it!') + '\n');
     win++;
     console.log('Win: ' + win + ', Lose: ' + lose);
@@ -142,7 +148,7 @@ function newRound() {
     ])
     .then(function(response) {
       if (response.newGame === 'New word!') {
-        choices = [];
+        wrongLetters = [];
         reset();
         startGame();
       } else {
@@ -152,7 +158,7 @@ function newRound() {
 }
 
 function reset() {
-  winCounter = 0;
+  letterCounter = 0;
   choicesLeft = 10;
   userGuesses = [];
   wordLine = [];
